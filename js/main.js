@@ -113,7 +113,7 @@ function def(data) {
   })
 
 }
-// getData('https://www.themealdb.com/api/json/v1/1/filter.php?a=American',def)
+getData('https://www.themealdb.com/api/json/v1/1/filter.php?a=American',def)
 
 //search
 function searchItem() {
@@ -573,18 +573,20 @@ $('#Ingradients').click(function () {
 //contact us
 function showContFun() {
   let cartoona = '';
-  for (let i = 0; i < 24; i++) {
     
 
-    cartoona += `<div class="col-md-3" >
-    <div class="rounded-3 d-flex align-items-center flex-column  m-3  p-0 overflow-hidden bg-danger position-relative">
-      <i class="fa-solid fa-drumstick-bite fa-4x"></i>
-    </div>
-  </div>
+    cartoona += `    <form action="" class="g-3 d-flex flex-wrap">
+    <input type="text" class="form-control w-50" placeholder="Enter your name..">
+    <input type="text" class="form-control w-50" placeholder="Enter your Email..">
+    <input type="text" class="form-control w-50" placeholder="Enter your Phone..">
+    <input type="text" class="form-control w-50" placeholder="Enter your Age..">
+    <input type="text" class="form-control w-50" placeholder="Enter your password..">
+    <input type="text" class="form-control w-50" placeholder="Enter your RePassword..">
+    <button class="btn btn-outline-danger col-md-4 m-auto my-4">submit</button>
+  </form>
     `
+    document.getElementById('rowMain').innerHTML = cartoona
   }
-  document.getElementById('rowMain').innerHTML = cartoona
-}
 
 
 $('#Contactus').click(function (){
