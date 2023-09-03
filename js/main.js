@@ -131,6 +131,72 @@ function searchItem() {
   document.getElementById('rowMain').innerHTML = cartoona;
 }
 
+
+function mealInfo(){
+  $('.theMeal').click(function () {
+
+    console.log($(this).attr('idMeal'));
+    let idMeal = $(this).attr('idMeal')
+
+    function mealDetail(data) {
+      let mealTags = data.meals[0].strTags
+      if (mealTags != null) {
+        var mealTagssplit = mealTags.split(',')
+        console.log(mealTagssplit);
+
+      }
+      let cartoona = '';
+      cartoona = `
+        <div class="col-md-4 rounded-3 overflow-hidden">
+        <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
+        <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
+      </div>
+      <div class="col-md-8 text-white">
+        <div class="m-5 mt-0">
+          <h2>Instructions</h2>
+          <p>${data.meals[0].strInstructions} </p>
+          <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
+          <h3><span>Category</span> : ${data.meals[0].strCategory}</h3>
+          <h3><span>Recipes</span> :</h3>
+          <ul class=" ms-0 ps-0 list-unstyled">
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
+            <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
+            </ul>
+            <h3 >Tags :</h3>
+            <ul id="tags" class="ms-0 ps-0 list-unstyled">
+
+          </ul>
+
+   
+          <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
+          <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
+        </div>
+      </div>
+`
+
+      document.getElementById('rowMain').innerHTML = cartoona;
+
+    }//end mealDetail
+
+    getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
 $('#Search').click(function () {
   searchItem()
 
@@ -142,7 +208,8 @@ $('#Search').click(function () {
       //filling the row with data
       let cartoona = '';
       for (let i = 0; i < data.meals.length; i++) {
-        cartoona += `    <div class="col-md-3" idMeal='${data.meals[i].idMeal}' >
+        cartoona += ` 
+           <div class="col-md-3 theMeal" idMeal='${data.meals[i].idMeal}' >
       <div class="rounded-3  m-3 p-0 overflow-hidden bg-danger position-relative">
        <div class="layer text-center bg-white w-100 h-100 position-absolute">
        <h3>${data.meals[i].strMeal}</h3>
@@ -153,6 +220,7 @@ $('#Search').click(function () {
       `
       }
       document.getElementById('searchResult').innerHTML = cartoona
+      mealInfo()
     }
 
     getData(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealNameSearch}`, searchNameKeyup)
@@ -167,7 +235,7 @@ $('#Search').click(function () {
       //filling the row with data
       let cartoona = '';
       for (let i = 0; i < data.meals.length; i++) {
-        cartoona += `    <div class="col-md-3" idMeal='${data.meals[i].idMeal}' >
+        cartoona += `    <div class="col-md-3 theMeal" idMeal='${data.meals[i].idMeal}' >
       <div class="rounded-3  m-3 p-0 overflow-hidden bg-danger position-relative">
        <div class="layer text-center bg-white w-100 h-100 position-absolute">
        <h3>${data.meals[i].strMeal}</h3>
@@ -177,7 +245,9 @@ $('#Search').click(function () {
      </div>
       `
       }
-      document.getElementById('searchResult').innerHTML = cartoona
+      document.getElementById('searchResult').innerHTML = cartoona;
+      mealInfo()
+
     }
 
     getData(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealLetterSearch}`, searchLetterKeyup)
@@ -246,58 +316,60 @@ function showCatData(data) {
       }
       document.getElementById('rowMain').innerHTML = cartoona;
       //meal detail/////////////////////////////////////////////////////////
-      $('.theMeal').click(function () {
-        // console.log($(this).attr('idMeal'));
-        let idMeal = $(this).attr('idMeal')
+    //   $('.theMeal').click(function () {
+    //     // console.log($(this).attr('idMeal'));
+    //     let idMeal = $(this).attr('idMeal')
 
-        function mealDetail(data) {
-          let mealTags = data.meals[0].strTags
-          if (mealTags != null) {
-            var mealTagssplit = mealTags.split(',')
-            console.log(mealTagssplit);
+    //     function mealDetail(data) {
+    //       let mealTags = data.meals[0].strTags
+    //       if (mealTags != null) {
+    //         var mealTagssplit = mealTags.split(',')
+    //         console.log(mealTagssplit);
 
-          }
-          let cartoona = '';
-          cartoona = `
-            <div class="col-md-4 rounded-3 overflow-hidden">
-            <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
-            <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
-          </div>
-          <div class="col-md-8 text-white">
-            <div class="m-5 mt-0">
-              <h2>Instructions</h2>
-              <p>${data.meals[0].strInstructions} </p>
-              <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
-              <h3><span>Category</span> : ${data.meals[0].strCategory}</h3>
-              <h3><span>Recipes</span> :</h3>
-              <ul class=" ms-0 ps-0 list-unstyled">
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
-                </ul>
-                <h3 >Tags :</h3>
-                <ul id="tags" class="ms-0 ps-0 list-unstyled">
+    //       }
+    //       let cartoona = '';
+    //       cartoona = `
+    //         <div class="col-md-4 rounded-3 overflow-hidden">
+    //         <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
+    //         <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
+    //       </div>
+    //       <div class="col-md-8 text-white">
+    //         <div class="m-5 mt-0">
+    //           <h2>Instructions</h2>
+    //           <p>${data.meals[0].strInstructions} </p>
+    //           <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
+    //           <h3><span>Category</span> : ${data.meals[0].strCategory}</h3>
+    //           <h3><span>Recipes</span> :</h3>
+    //           <ul class=" ms-0 ps-0 list-unstyled">
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
+    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
+    //             </ul>
+    //             <h3 >Tags :</h3>
+    //             <ul id="tags" class="ms-0 ps-0 list-unstyled">
 
-              </ul>
+    //           </ul>
 
        
-              <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
-              <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
-            </div>
-          </div>
-    `
+    //           <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
+    //           <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
+    //         </div>
+    //       </div>
+    // `
 
-          document.getElementById('rowMain').innerHTML = cartoona;
+    //       document.getElementById('rowMain').innerHTML = cartoona;
 
-        }//end mealDetail
-        getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
+    //     }//end mealDetail
+    //     getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
 
 
-      })
+    //   })
+    mealInfo()
+
     }
     getCatData(mealCatName)
   })
@@ -363,58 +435,9 @@ function showAreaData(data) {
       }
       document.getElementById('rowMain').innerHTML = cartoona;
       //meal detail/////////////////////////////////////////////////////////
-      $('.theMeal').click(function () {
-        // console.log($(this).attr('idMeal'));
-        let idMeal = $(this).attr('idMeal')
+  
+    mealInfo()
 
-        function mealDetail(data) {
-          let mealTags = data.meals[0].strTags
-          if (mealTags != null) {
-            var mealTagssplit = mealTags.split(',')
-            console.log(mealTagssplit);
-
-          }
-          let cartoona = '';
-          cartoona = `
-            <div class="col-md-4 rounded-3 overflow-hidden">
-            <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
-            <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
-          </div>
-          <div class="col-md-8 text-white">
-            <div class="m-5 mt-0">
-              <h2>Instructions</h2>
-              <p>${data.meals[0].strInstructions} </p>
-              <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
-              <h3><span>Category</span> : ${data.meals[0].strCategory}</h3>
-              <h3><span>Recipes</span> :</h3>
-              <ul class=" ms-0 ps-0 list-unstyled">
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
-                </ul>
-                <h3 >Tags :</h3>
-                <ul id="tags" class="ms-0 ps-0 list-unstyled">
-
-              </ul>
-
-       
-              <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
-              <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
-            </div>
-          </div>
-    `
-
-          document.getElementById('rowMain').innerHTML = cartoona;
-
-        }//end mealDetail
-        getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
-
-
-      })
     }
     getareaData(mealAreaName)
   })
@@ -503,58 +526,8 @@ function showIngData(data) {
       }
       document.getElementById('rowMain').innerHTML = cartoona;
       //meal detail/////////////////////////////////////////////////////////
-      $('.theMeal').click(function () {
-        // console.log($(this).attr('idMeal'));
-        let idMeal = $(this).attr('idMeal')
+      mealInfo()
 
-        function mealDetail(data) {
-          let mealTags = data.meals[0].strTags
-          if (mealTags != null) {
-            var mealTagssplit = mealTags.split(',')
-            console.log(mealTagssplit);
-
-          }
-          let cartoona = '';
-          cartoona = `
-            <div class="col-md-4 rounded-3 overflow-hidden">
-            <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
-            <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
-          </div>
-          <div class="col-md-8 text-white">
-            <div class="m-5 mt-0">
-              <h2>Instructions</h2>
-              <p>${data.meals[0].strInstructions} </p>
-              <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
-              <h3><span>egory</span> : ${data.meals[0].stregory}</h3>
-              <h3><span>Recipes</span> :</h3>
-              <ul class=" ms-0 ps-0 list-unstyled">
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
-                <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
-                </ul>
-                <h3 >Tags :</h3>
-                <ul id="tags" class="ms-0 ps-0 list-unstyled">
-
-              </ul>
-
-       
-              <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
-              <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
-            </div>
-          </div>
-    `
-
-          document.getElementById('rowMain').innerHTML = cartoona;
-
-        }//end mealDetail
-        getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
-
-
-      })
     }
 
     getIngData(mealIngName)
