@@ -2,9 +2,11 @@
 //nav icon
 let navWidth = $('.inner').outerWidth()
 $('#open').click(function () {
+  new WOW().init();
   $('nav').animate({ left: "0" }, 700)
   $('.fa-x').css('display', 'block')
   $('.fa-bars').css('display', 'none')
+
 })
 $('#close').click(function () {
   $('nav').animate({ left: "-206.734" }, 700)
@@ -12,11 +14,8 @@ $('#close').click(function () {
   $('.fa-bars').css('display', 'block')
 
 })
+// new WOW().init();
 
-//load
-// $(document).ready(function () {
-//   $('.loading-div').fadeOut(500)
-// });
 
 $('nav a').click(function () {
   if ($('nav').css('left') == "0px") {
@@ -219,10 +218,10 @@ $('#Search').click(function () {
 //category//////////////////////////////////////////////////////////////////////////////////////////
 function showCatData(data) {
   let cartoona = '';
-    //split string
-    
-    for (let i = 0; i < data.categories.length; i++) {
-      let catSplit;
+  //split string
+
+  for (let i = 0; i < data.categories.length; i++) {
+    let catSplit;
     if (data.categories[i].strCategoryDescription != null) {
       let spl = data.categories[i].strCategoryDescription.split(" ", 15)
       catSplit = spl.join(" ")
@@ -484,11 +483,11 @@ function showContFun() {
   document.getElementById('rowMain').innerHTML = cartoona
 }
 
-  let nameReg=/^[a-z A-Z]{1,}$/
-  let emailReg=/^[a-z A-Z \d]{1,}@[a-z]{1,10}\.[a-z]{1,5}$/
-  let passReg=/^[a-z A-Z \d]{8,}$/
-  let ageReg=/^\d{1,2}$/
-  let phoneReg=/^(012|010|011|015)[0-9]{8}$/
+let nameReg = /^[a-z A-Z]{1,}$/
+let emailReg = /^[a-z A-Z \d]{1,}@[a-z]{1,10}\.[a-z]{1,5}$/
+let passReg = /^[a-z A-Z \d]{8,}$/
+let ageReg = /^\d{1,2}$/
+let phoneReg = /^(012|010|011|015)[0-9]{8}$/
 
 
 
@@ -496,84 +495,84 @@ $('#Contactus').click(function () {
   $('.loading-div').fadeOut(100)
 
   showContFun()
-  $('#nome').keyup(function(){
-    if(nameReg.test($('#nome').val())){
+  $('#nome').keyup(function () {
+    if (nameReg.test($('#nome').val())) {
       // console.log('ye')
       console.log($('.noem'));
-      $('.noem').css("display",'none');
-      
-      
-    }else{
-      $('.noem').css("display",'block');
+      $('.noem').css("display", 'none');
+
+
+    } else {
+      $('.noem').css("display", 'block');
       console.log('no');
     }
   })
-  $('#emol').keyup(function(){
-    if(emailReg.test($('#emol').val())){
+  $('#emol').keyup(function () {
+    if (emailReg.test($('#emol').val())) {
       // console.log('ye')
       console.log($('.emlo'));
-      $('.emlo').css("display",'none');
-      
-      
-    }else{
-      $('.emlo').css("display",'block');
+      $('.emlo').css("display", 'none');
+
+
+    } else {
+      $('.emlo').css("display", 'block');
       console.log('no');
     }
   })
-  $('#fone').keyup(function(){
-    if(phoneReg.test($('#fone').val())){
+  $('#fone').keyup(function () {
+    if (phoneReg.test($('#fone').val())) {
       // console.log('ye')
       console.log($('.foen'));
-      $('.foen').css("display",'none');
-      
-      
-    }else{
-      $('.foen').css("display",'block');
+      $('.foen').css("display", 'none');
+
+
+    } else {
+      $('.foen').css("display", 'block');
       console.log('no');
     }
   })
-  $('#age').keyup(function(){
-    if(ageReg.test($('#age').val())){
+  $('#age').keyup(function () {
+    if (ageReg.test($('#age').val())) {
       // console.log('ye')
       console.log($('.aeg'));
-      $('.aeg').css("display",'none');
-      
-      
-    }else{
-      $('.aeg').css("display",'block');
+      $('.aeg').css("display", 'none');
+
+
+    } else {
+      $('.aeg').css("display", 'block');
       console.log('no');
     }
   })
-  $('#pass').keyup(function(){
-    if(passReg.test($('#pass').val())){
+  $('#pass').keyup(function () {
+    if (passReg.test($('#pass').val())) {
       // console.log('ye')
       console.log($('.passo'));
-      $('.passo').css("display",'none');
-      
-      
-    }else{
-      $('.passo').css("display",'block');
+      $('.passo').css("display", 'none');
+
+
+    } else {
+      $('.passo').css("display", 'block');
       console.log('no');
     }
   })
-  $('#repass').keyup(function(){
-    if($('#pass').val()==$('#repass').val()){
+  $('#repass').keyup(function () {
+    if ($('#pass').val() == $('#repass').val()) {
       // console.log('ye')
       console.log($('.repasso'));
-      $('.repasso').css("display",'none');
-      
-      
-    }else{
-      $('.repasso').css("display",'block');
+      $('.repasso').css("display", 'none');
+
+
+    } else {
+      $('.repasso').css("display", 'block');
       console.log('no');
     }
   })
   console.log($('input').val());
-if($('input').val()!=""){
-  console.log('x');
-}else{
-  console.log('m')
-}
+  if ($('input').val() != "") {
+    console.log('x');
+  } else {
+    console.log('m')
+  }
 })
 
 
