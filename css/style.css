@@ -24,7 +24,9 @@ bottom: 0;
     transition: all .3s;
   }
 
-
+.noem,.aeg,.emlo,.passo,.repasso,.foen{
+  display: none;
+}
 
   .loading-div{
     background-color: #171717;

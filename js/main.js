@@ -12,18 +12,19 @@ $('#close').click(function () {
   $('.fa-bars').css('display', 'block')
 
 })
+
 //load
-$(document).ready(function () {
-  $('.loading-div').fadeOut(500)
-});
+// $(document).ready(function () {
+//   $('.loading-div').fadeOut(500)
+// });
 
-$('nav a').click(function(){
-if($('nav').css('left')=="0px") {
-  $('nav').animate({ left: "-206.734" }, 700)
-  $('.fa-x').css('display', 'none')
-  $('.fa-bars').css('display', 'block')
+$('nav a').click(function () {
+  if ($('nav').css('left') == "0px") {
+    $('nav').animate({ left: "-206.734" }, 700)
+    $('.fa-x').css('display', 'none')
+    $('.fa-bars').css('display', 'block')
 
-}
+  }
 
 })
 
@@ -42,7 +43,7 @@ async function getData(link, showFun) {
   showFun(data)
 }
 
-//def
+def
 
 function def(data) {
   //filling the row with data
@@ -60,60 +61,11 @@ function def(data) {
   `
   }
   document.getElementById('rowMain').innerHTML = cartoona;
-  $('.theMeal').click(function () {
-    // console.log($(this).attr('idMeal'));
-    let idMeal = $(this).attr('idMeal')
 
-    function mealDetail(data) {
-      let mealTags = data.meals[0].strTags
-      if (mealTags != null) {
-        var mealTagssplit = mealTags.split(',')
-        console.log(mealTagssplit);
-
-      }
-      let cartoona = '';
-      cartoona = `
-        <div class="col-md-4 rounded-3 overflow-hidden">
-        <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
-        <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
-      </div>
-      <div class="col-md-8 text-white">
-        <div class="m-5 mt-0">
-          <h2>Instructions</h2>
-          <p>${data.meals[0].strInstructions} </p>
-          <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
-          <h3><span>Category</span> : ${data.meals[0].strCategory}</h3>
-          <h3><span>Recipes</span> :</h3>
-          <ul class=" ms-0 ps-0 list-unstyled">
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
-            <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
-            </ul>
-            <h3 >Tags :</h3>
-            <ul id="tags" class="ms-0 ps-0 list-unstyled">
-
-          </ul>
-
-   
-          <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
-          <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
-        </div>
-      </div>
-`
-
-      document.getElementById('rowMain').innerHTML = cartoona;
-
-    }//end mealDetail
-
-    getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
-  })
+  mealInfo()
 
 }
-getData('https://www.themealdb.com/api/json/v1/1/filter.php?a=American',def)
+getData('https://www.themealdb.com/api/json/v1/1/filter.php?a=American', def)
 
 //search
 function searchItem() {
@@ -132,13 +84,13 @@ function searchItem() {
 }
 
 
-function mealInfo(){
+function mealInfo() {
   $('.theMeal').click(function () {
 
-    console.log($(this).attr('idMeal'));
     let idMeal = $(this).attr('idMeal')
 
     function mealDetail(data) {
+      //split string
       let mealTags = data.meals[0].strTags
       if (mealTags != null) {
         var mealTagssplit = mealTags.split(',')
@@ -267,13 +219,20 @@ $('#Search').click(function () {
 //category//////////////////////////////////////////////////////////////////////////////////////////
 function showCatData(data) {
   let cartoona = '';
-  for (let i = 0; i < 12; i++) {
+    //split string
+    
+    for (let i = 0; i < data.categories.length; i++) {
+      let catSplit;
+    if (data.categories[i].strCategoryDescription != null) {
+      let spl = data.categories[i].strCategoryDescription.split(" ", 15)
+      catSplit = spl.join(" ")
+    }
     cartoona += `
-    <div class="col-md-3 catItem " mealCatName='${data.categories[i].strCategory}'>
+    <div class="col-md-3 catItem p-2" mealCatName='${data.categories[i].strCategory}'>
     <div class="rounded-3  m-3 p-0 overflow-hidden bg-danger position-relative">
     <div class="layer text-center bg-white w-100 h-100 position-absolute">
     <h3>${data.categories[i].strCategory}</h3>
-                <p> ${data.categories[i].strCategoryDescription} </p>
+                <p> ${catSplit} </p>
                 </div>
                 <img src="${data.categories[i].strCategoryThumb}" class="w-100" alt="">
                 
@@ -287,7 +246,6 @@ function showCatData(data) {
 
   //if click on someone //////////////////////////////////////////////////////////
   $('.catItem').click(function () {
-    console.log('moss');
     $('.loading-div').fadeIn(300)
 
     let mealCatName = $(this).attr('mealCatName');
@@ -295,14 +253,13 @@ function showCatData(data) {
     async function getCatData(mealCatName) {
       let resp = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${mealCatName}`)
       let catDetData = await resp.json()
-      console.log(catDetData);
       $(catDetData).ready(function () {
         $('.loading-div').fadeOut(300);
       })
 
       let cartoona = '';
 
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < catDetData.meals.length; i++) {
         cartoona += `
              <div class="col-md-3 theMeal " idMeal='${catDetData.meals[i].idMeal}' >
               <div class="rounded-3  m-3 p-0 overflow-hidden bg-danger position-relative">
@@ -316,59 +273,7 @@ function showCatData(data) {
       }
       document.getElementById('rowMain').innerHTML = cartoona;
       //meal detail/////////////////////////////////////////////////////////
-    //   $('.theMeal').click(function () {
-    //     // console.log($(this).attr('idMeal'));
-    //     let idMeal = $(this).attr('idMeal')
-
-    //     function mealDetail(data) {
-    //       let mealTags = data.meals[0].strTags
-    //       if (mealTags != null) {
-    //         var mealTagssplit = mealTags.split(',')
-    //         console.log(mealTagssplit);
-
-    //       }
-    //       let cartoona = '';
-    //       cartoona = `
-    //         <div class="col-md-4 rounded-3 overflow-hidden">
-    //         <img src="${data.meals[0].strMealThumb}" class="rounded-3 w-100">
-    //         <h2 class="text-white fa-3x">${data.meals[0].strMeal}</h2>
-    //       </div>
-    //       <div class="col-md-8 text-white">
-    //         <div class="m-5 mt-0">
-    //           <h2>Instructions</h2>
-    //           <p>${data.meals[0].strInstructions} </p>
-    //           <h3><span>Area</span> : ${data.meals[0].strArea}</h3>
-    //           <h3><span>Category</span> : ${data.meals[0].strCategory}</h3>
-    //           <h3><span>Recipes</span> :</h3>
-    //           <ul class=" ms-0 ps-0 list-unstyled">
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure1} ${data.meals[0].strIngredient1}</li>
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure2} ${data.meals[0].strIngredient2}</li>
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure3} ${data.meals[0].strIngredient3}</li>
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure4} ${data.meals[0].strIngredient4}</li>
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure5} ${data.meals[0].strIngredient5}</li>
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure6} ${data.meals[0].strIngredient6}</li>
-    //             <li class="btn btn-info m-1">${data.meals[0].strMeasure7} ${data.meals[0].strIngredient7}</li>               
-    //             </ul>
-    //             <h3 >Tags :</h3>
-    //             <ul id="tags" class="ms-0 ps-0 list-unstyled">
-
-    //           </ul>
-
-       
-    //           <a href="${data.meals[0].strSource}" target="_blank" class="btn btn-success">Source</a>
-    //           <a href="${data.meals[0].strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>
-    //         </div>
-    //       </div>
-    // `
-
-    //       document.getElementById('rowMain').innerHTML = cartoona;
-
-    //     }//end mealDetail
-    //     getData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`, mealDetail)
-
-
-    //   })
-    mealInfo()
+      mealInfo()
 
     }
     getCatData(mealCatName)
@@ -435,8 +340,8 @@ function showAreaData(data) {
       }
       document.getElementById('rowMain').innerHTML = cartoona;
       //meal detail/////////////////////////////////////////////////////////
-  
-    mealInfo()
+
+      mealInfo()
 
     }
     getareaData(mealAreaName)
@@ -546,28 +451,130 @@ $('#Ingradients').click(function () {
 //contact us
 function showContFun() {
   let cartoona = '';
-    
 
-    cartoona += `    <form action="" class="g-3 d-flex flex-wrap">
-    <input type="text" class="form-control w-50" placeholder="Enter your name..">
-    <input type="text" class="form-control w-50" placeholder="Enter your Email..">
-    <input type="text" class="form-control w-50" placeholder="Enter your Phone..">
-    <input type="text" class="form-control w-50" placeholder="Enter your Age..">
-    <input type="text" class="form-control w-50" placeholder="Enter your password..">
-    <input type="text" class="form-control w-50" placeholder="Enter your RePassword..">
-    <button class="btn btn-outline-danger col-md-4 m-auto my-4">submit</button>
-  </form>
+
+  cartoona += `     
+   <div class="d-flex col-md-6 flex-column">
+  <input type="text" id='nome' class="form-control " placeholder="Enter your name..">
+  <div class="alert noem alert-danger text-center ">Special characters and numbers not allowed</div>
+</div>
+<div class="d-flex col-md-6 flex-column">
+<input type="text" id='emol' class="form-control " placeholder="Enter your Email..">
+  <div class="alert emlo alert-danger text-center ">Special characters and numbers not allowed</div>
+</div>
+<div class="d-flex col-md-6 flex-column">
+<input type="text" id='fone' class="form-control " placeholder="Enter your Phone..">
+  <div class="alert foen alert-danger text-center ">Special characters and numbers not allowed</div>
+</div>
+<div class="d-flex col-md-6 flex-column">
+<input type="text" id='age' class="form-control " placeholder="Enter your Age..">
+  <div class="alert aeg alert-danger text-center ">Special characters and numbers not allowed</div>
+</div>
+<div class="d-flex col-md-6 flex-column">
+<input type="text" id='pass' class="form-control " placeholder="Enter your password..">
+  <div class="alert passo alert-danger text-center  ">Special characters and numbers not allowed</div>
+</div>
+<div class="d-flex col-md-6 flex-column">
+<input type="text" id='repass' class="form-control " placeholder="Enter your RePassword..">
+  <div class="alert repasso alert-danger text-center  ">Special characters and numbers not allowed</div>
+</div>
+
+<button class="btn  btn-outline-danger disabled col-md-4 m-auto my-4">submit</button>
     `
-    document.getElementById('rowMain').innerHTML = cartoona
-  }
+  document.getElementById('rowMain').innerHTML = cartoona
+}
+
+  let nameReg=/^[a-z A-Z]{1,}$/
+  let emailReg=/^[a-z A-Z \d]{1,}@[a-z]{1,10}\.[a-z]{1,5}$/
+  let passReg=/^[a-z A-Z \d]{8,}$/
+  let ageReg=/^\d{1,2}$/
+  let phoneReg=/^(012|010|011|015)[0-9]{8}$/
 
 
-$('#Contactus').click(function (){
-  console.log('yes');
+
+$('#Contactus').click(function () {
+  $('.loading-div').fadeOut(100)
+
   showContFun()
+  $('#nome').keyup(function(){
+    if(nameReg.test($('#nome').val())){
+      // console.log('ye')
+      console.log($('.noem'));
+      $('.noem').css("display",'none');
+      
+      
+    }else{
+      $('.noem').css("display",'block');
+      console.log('no');
+    }
+  })
+  $('#emol').keyup(function(){
+    if(emailReg.test($('#emol').val())){
+      // console.log('ye')
+      console.log($('.emlo'));
+      $('.emlo').css("display",'none');
+      
+      
+    }else{
+      $('.emlo').css("display",'block');
+      console.log('no');
+    }
+  })
+  $('#fone').keyup(function(){
+    if(phoneReg.test($('#fone').val())){
+      // console.log('ye')
+      console.log($('.foen'));
+      $('.foen').css("display",'none');
+      
+      
+    }else{
+      $('.foen').css("display",'block');
+      console.log('no');
+    }
+  })
+  $('#age').keyup(function(){
+    if(ageReg.test($('#age').val())){
+      // console.log('ye')
+      console.log($('.aeg'));
+      $('.aeg').css("display",'none');
+      
+      
+    }else{
+      $('.aeg').css("display",'block');
+      console.log('no');
+    }
+  })
+  $('#pass').keyup(function(){
+    if(passReg.test($('#pass').val())){
+      // console.log('ye')
+      console.log($('.passo'));
+      $('.passo').css("display",'none');
+      
+      
+    }else{
+      $('.passo').css("display",'block');
+      console.log('no');
+    }
+  })
+  $('#repass').keyup(function(){
+    if($('#pass').val()==$('#repass').val()){
+      // console.log('ye')
+      console.log($('.repasso'));
+      $('.repasso').css("display",'none');
+      
+      
+    }else{
+      $('.repasso').css("display",'block');
+      console.log('no');
+    }
+  })
+  console.log($('input').val());
+if($('input').val()!=""){
+  console.log('x');
+}else{
+  console.log('m')
+}
 })
-
-
 
 
 
